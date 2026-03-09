@@ -1,0 +1,8 @@
+# Jekyll config for GitHub Pages
+# For project site https://<user>.github.io/zo-agent-registry/ set baseurl below (or leave empty for user site)
+title: Zo Agent Registry
+description: Documentation for Zo Agent Registry — open registry of reusable agent templates for Zo Computer users
+theme: jekyll-theme-minimal
+markdown: kramdown
+# If your repo is zo-agent-registry, uncomment so links work:
+# baseurl: "/zo-agent-registry"
