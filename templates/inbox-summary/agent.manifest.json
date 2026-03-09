@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "inbox-summary",
+  "name": "Inbox Summary",
+  "summary": "Produces a daily or weekly summary of email or task inbox for triage and prioritization.",
+  "description": "Consumes a safe, local or API-provided representation of inbox items (e.g. email subjects and metadata, task titles) and produces a structured summary: priority buckets, suggested order, and key themes. Does not send email or modify inbox; output only.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Zo Agent Registry", "url": "https://github.com/zo-agent-registry" }],
+  "homepage": "https://github.com/zo-agent-registry/templates",
+  "repository": "https://github.com/zo-agent-registry/templates",
+  "license": "Apache-2.0",
+  "tags": ["inbox", "email", "summary", "personal-ops", "triage"],
+  "category": "personal-ops",
+  "capabilities": ["read-only"],
+  "inputs": { "description": "Inbox source path or API endpoint (read-only)", "schema": { "source": "string" } },
+  "outputs": { "description": "Structured summary with priority and themes", "schema": { "summary": "string", "priority": "array", "themes": "array" } },
+  "env": [
+    { "name": "INBOX_SOURCE", "description": "Path to JSON/MBOX file or read-only API URL", "required": true },
+    { "name": "INBOX_LIMIT", "description": "Max items to process", "required": false, "example": "50" },
+    { "name": "OUTPUT_PATH", "description": "Output file path", "required": false }
+  ],
+  "schedule": [
+    { "cron": "0 8 * * *", "description": "Daily at 08:00" },
+    { "interval": "P1D", "description": "Once per day" }
+  ],
+  "files": [{ "path": "prompt.md" }, { "path": ".env.example" }],
+  "examples": [{ "name": "Sample summary", "path": "examples/summary-sample.json" }],
+  "safety": [
+    { "category": "data", "description": "Only reads from configured source; no sending or modifying of email." },
+    { "category": "secrets", "description": "Do not log or store credentials; use secure local or OAuth-backed APIs only." }
+  ],
+  "compatibility": { "zoFriendly": true, "platforms": ["linux"] },
+  "installation": { "steps": ["Copy template", "Configure INBOX_SOURCE (local file or read-only API)"] },
+  "execution": { "notes": "Runtime must provide inbox data; this template defines prompt and schema only." },
+  "changelog": [{ "version": "1.0.0", "changes": ["Initial release"] }]
+}

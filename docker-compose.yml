@@ -1,0 +1,34 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/zo_registry
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-}
+      TEMPLATES_DIR: /app/templates
+      NEXT_PUBLIC_APP_URL: http://localhost:3001
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./templates:/app/templates:ro
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: zo_registry
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

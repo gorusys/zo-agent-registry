@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  agents    Agent[]
+}
+
+model Agent {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  publishedAt DateTime?
+  userId      String?
+  user        User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  versions    AgentVersion[]
+  tags        AgentTag[]
+  submissions Submission[]
+
+  @@index([slug])
+  @@index([publishedAt])
+}
+
+model AgentTag {
+  id       String  @id @default(cuid())
+  agentId  String
+  tag      String
+  agent    Agent   @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, tag])
+  @@index([tag])
+}
+
+model AgentVersion {
+  id          String   @id @default(cuid())
+  agentId     String
+  version     String
+  manifest    Json
+  checksum    String?
+  archiveUrl  String?
+  createdAt   DateTime @default(now())
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, version])
+  @@index([agentId])
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  status    String   // pending | approved | rejected
+  payload   Json     // manifest + optional archive reference
+  reason    String?  // rejection reason or note
+  agentId   String?
+  agent     Agent?   @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  reviewedAt DateTime?
+  requestId String?
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  resource  String
+  resourceId String?
+  details   Json?
+  createdAt DateTime @default(now())
+  requestId String?
+
+  @@index([action])
+  @@index([createdAt])
+}

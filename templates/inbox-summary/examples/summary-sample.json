@@ -1,0 +1,9 @@
+{
+  "summary": "42 items in inbox; 5 high priority, 12 medium, 25 low.",
+  "priority": [
+    { "level": "high", "items": [{ "subject": "Urgent: deadline tomorrow", "date": "2025-03-09" }] },
+    { "level": "medium", "items": [] },
+    { "level": "low", "items": [] }
+  ],
+  "themes": ["billing", "support", "product-updates"]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "changelog-watcher",
+  "name": "Changelog Watcher",
+  "summary": "Watches configured product changelog URLs and RSS feeds for new entries; outputs a digest.",
+  "description": "Monitors changelog pages and feeds for a list of products or projects. When new entries appear, produces a digest with product name, version or date, and link. Useful for staying current with dependencies and tools.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Zo Agent Registry", "url": "https://github.com/zo-agent-registry" }],
+  "homepage": "https://github.com/zo-agent-registry/templates",
+  "repository": "https://github.com/zo-agent-registry/templates",
+  "license": "Apache-2.0",
+  "tags": ["changelog", "monitoring", "releases", "developer"],
+  "category": "developer-productivity",
+  "capabilities": ["http", "read-only"],
+  "inputs": { "description": "Changelog URLs and optional since date", "schema": { "urls": "array", "since": "string" } },
+  "outputs": { "description": "Digest of new changelog entries", "schema": { "entries": "array", "generatedAt": "string" } },
+  "env": [
+    { "name": "CHANGELOG_URLS", "description": "Comma-separated changelog page or feed URLs", "required": true },
+    { "name": "SINCE_DAYS", "description": "Only include entries from last N days", "required": false, "example": "7" },
+    { "name": "OUTPUT_PATH", "description": "Output file path", "required": false }
+  ],
+  "schedule": [
+    { "cron": "0 6 * * *", "description": "Daily at 06:00" },
+    { "interval": "P1D", "description": "Once per day" }
+  ],
+  "files": [{ "path": "prompt.md" }, { "path": ".env.example" }],
+  "examples": [{ "name": "Sample digest", "path": "examples/changelog-sample.md" }],
+  "safety": [
+    { "category": "network", "description": "Only fetches configured changelog URLs; read-only." }
+  ],
+  "compatibility": { "zoFriendly": true, "platforms": ["linux"] },
+  "installation": { "steps": ["Copy template", "Set CHANGELOG_URLS and optional SINCE_DAYS, OUTPUT_PATH"] },
+  "execution": { "notes": "Runtime fetches and parses; template is declarative only." },
+  "changelog": [{ "version": "1.0.0", "changes": ["Initial release"] }]
+}

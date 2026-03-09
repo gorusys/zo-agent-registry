@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "competitor-watch",
+  "name": "Competitor Watch",
+  "summary": "Monitors competitor websites and feeds for changes and news; produces a weekly briefing.",
+  "description": "Tracks a list of competitor URLs (blogs, news, product pages) and produces a structured briefing of changes, new posts, or notable updates. Uses configured feeds and optional diff signals. Output is markdown suitable for internal distribution.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Zo Agent Registry", "url": "https://github.com/zo-agent-registry" }],
+  "homepage": "https://github.com/zo-agent-registry/templates",
+  "repository": "https://github.com/zo-agent-registry/templates",
+  "license": "Apache-2.0",
+  "tags": ["monitoring", "competitor", "business", "digest"],
+  "category": "monitoring",
+  "capabilities": ["http", "read-only"],
+  "inputs": { "description": "List of competitor URLs and optional keywords", "schema": { "urls": "array", "keywords": "array" } },
+  "outputs": { "description": "Briefing with sections per competitor", "schema": { "briefing": "string", "entries": "array" } },
+  "env": [
+    { "name": "COMPETITOR_URLS", "description": "Comma-separated URLs to monitor", "required": true },
+    { "name": "COMPETITOR_FEEDS", "description": "Optional RSS/Atom feeds for same", "required": false },
+    { "name": "KEYWORDS", "description": "Optional keywords to highlight", "required": false },
+    { "name": "OUTPUT_DIR", "description": "Directory for briefing output", "required": false, "example": "./briefings" }
+  ],
+  "schedule": [
+    { "cron": "0 9 * * 1", "description": "Weekly on Monday 09:00" },
+    { "interval": "P7D", "description": "Once per week" }
+  ],
+  "files": [{ "path": "prompt.md" }, { "path": ".env.example" }],
+  "examples": [{ "name": "Sample briefing", "path": "examples/briefing-sample.md" }],
+  "safety": [
+    { "category": "network", "description": "Only fetches configured URLs; no scraping of authenticated or private pages without explicit config." }
+  ],
+  "compatibility": { "zoFriendly": true, "platforms": ["linux"] },
+  "installation": { "steps": ["Copy template", "Set COMPETITOR_URLS and optional COMPETITOR_FEEDS, KEYWORDS, OUTPUT_DIR"] },
+  "execution": { "notes": "Runtime fetches and compares; template is declarative only." },
+  "changelog": [{ "version": "1.0.0", "changes": ["Initial release"] }]
+}

@@ -1,0 +1,13 @@
+{
+  "repos": [
+    {
+      "name": "example-repo",
+      "full_name": "owner/example-repo",
+      "description": "A sample repository",
+      "html_url": "https://github.com/owner/example-repo",
+      "stargazers_count": 1234,
+      "language": "TypeScript"
+    }
+  ],
+  "generatedAt": "2025-03-09T08:00:00.000Z"
+}

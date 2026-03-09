@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "daily-research-digest",
+  "name": "Daily Research Digest",
+  "summary": "Compiles a daily digest of research papers and articles from configured feeds and topics.",
+  "description": "This agent template helps you stay current with research by aggregating content from RSS feeds, arXiv categories, or topic keywords. It produces a structured markdown digest with summaries and links. Run daily via cron to get a consistent morning briefing.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Zo Agent Registry", "url": "https://github.com/zo-agent-registry" }],
+  "homepage": "https://github.com/zo-agent-registry/templates",
+  "repository": "https://github.com/zo-agent-registry/templates",
+  "license": "Apache-2.0",
+  "tags": ["research", "digest", "rss", "arxiv", "daily"],
+  "category": "research",
+  "capabilities": ["http", "read-only"],
+  "inputs": {
+    "description": "Optional date range and topic filters",
+    "schema": { "since": "string", "topics": "array" }
+  },
+  "outputs": {
+    "description": "Markdown digest with sections per topic",
+    "schema": { "title": "string", "sections": "array", "generatedAt": "string" }
+  },
+  "env": [
+    { "name": "FEED_URLS", "description": "Comma-separated RSS/Atom feed URLs", "required": true, "example": "https://example.com/feed.xml" },
+    { "name": "ARXIV_CATEGORIES", "description": "Optional arXiv categories (e.g. cs.AI)", "required": false },
+    { "name": "OUTPUT_DIR", "description": "Directory to write digest file", "required": false, "example": "./output" }
+  ],
+  "schedule": [
+    { "cron": "0 7 * * *", "description": "Daily at 07:00" },
+    { "interval": "P1D", "description": "Once per day" }
+  ],
+  "files": [
+    { "path": "prompt.md", "description": "Main prompt/instructions" },
+    { "path": ".env.example", "description": "Example environment variables" }
+  ],
+  "examples": [
+    { "name": "Sample digest output", "path": "examples/digest-sample.md", "description": "Example markdown digest" }
+  ],
+  "safety": [
+    { "category": "network", "description": "Only fetches from configured URLs; no arbitrary requests." },
+    { "category": "data", "description": "Does not store personal data; outputs are local files." }
+  ],
+  "compatibility": { "zoFriendly": true, "platforms": ["linux"], "notes": "Runs as read-only agent; schedule via cron on Zo." },
+  "installation": {
+    "steps": ["Copy template to your workspace", "Set FEED_URLS and optional env in .env", "Run zoar install daily-research-digest or copy from templates/"]
+  },
+  "execution": {
+    "command": "node",
+    "args": ["run-digest.js"],
+    "notes": "Your runtime must implement the prompt; this template only provides manifest and prompt.md."
+  },
+  "changelog": [{ "version": "1.0.0", "changes": ["Initial release"] }]
+}

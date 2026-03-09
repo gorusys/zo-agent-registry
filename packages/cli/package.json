@@ -1,0 +1,25 @@
+{
+  "name": "@zo-agent-registry/cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": { "zoar": "dist/cli.js" },
+  "main": "dist/cli.js",
+  "scripts": {
+    "build": "tsc",
+    "cli": "node dist/cli.js",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@zo-agent-registry/manifest-schema": "workspace:*",
+    "@zo-agent-registry/registry-core": "workspace:*",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  }
+}

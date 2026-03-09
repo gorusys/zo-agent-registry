@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "github-trending-monitor",
+  "name": "GitHub Trending Monitor",
+  "summary": "Tracks trending repositories on GitHub by language and period, outputs a report.",
+  "description": "Monitors GitHub trending repositories for specified languages and time windows (daily, weekly). Produces a markdown or JSON report with repo name, description, stars, and link. Useful for developer productivity and discovery.",
+  "version": "1.0.0",
+  "authors": [{ "name": "Zo Agent Registry", "url": "https://github.com/zo-agent-registry" }],
+  "homepage": "https://github.com/zo-agent-registry/templates",
+  "repository": "https://github.com/zo-agent-registry/templates",
+  "license": "Apache-2.0",
+  "tags": ["github", "trending", "monitoring", "developer"],
+  "category": "developer-productivity",
+  "capabilities": ["http", "read-only"],
+  "inputs": {
+    "description": "Language and period filters",
+    "schema": { "language": "string", "since": "string" }
+  },
+  "outputs": {
+    "description": "List of trending repos with metadata",
+    "schema": { "repos": "array", "generatedAt": "string" }
+  },
+  "env": [
+    { "name": "GITHUB_LANGUAGES", "description": "Comma-separated languages (e.g. typescript,python)", "required": false, "example": "typescript,python" },
+    { "name": "GITHUB_TOKEN", "description": "Optional GitHub token for higher rate limits", "required": false, "secret": true },
+    { "name": "OUTPUT_PATH", "description": "Path for report file", "required": false, "example": "./trending.json" }
+  ],
+  "schedule": [
+    { "cron": "0 8 * * *", "description": "Daily at 08:00" },
+    { "interval": "P1D", "description": "Once per day" }
+  ],
+  "files": [
+    { "path": "prompt.md" },
+    { "path": ".env.example" }
+  ],
+  "examples": [
+    { "name": "Sample trending report", "path": "examples/trending-sample.json" }
+  ],
+  "safety": [
+    { "category": "network", "description": "Only accesses GitHub public API or trending page; no private repos without token." }
+  ],
+  "compatibility": { "zoFriendly": true, "platforms": ["linux"] },
+  "installation": { "steps": ["Copy template to workspace", "Set GITHUB_LANGUAGES and optional GITHUB_TOKEN"] },
+  "execution": { "notes": "Runtime must fetch GitHub trending and format output; no code execution from template." },
+  "changelog": [{ "version": "1.0.0", "changes": ["Initial release"] }]
+}

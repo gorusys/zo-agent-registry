@@ -1,0 +1,29 @@
+{
+  "name": "zo-agent-registry",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Open registry of reusable agent templates for Zo Computer users",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@9.14.2",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter @zo-agent-registry/manifest-schema build && pnpm --filter @zo-agent-registry/registry-core build && pnpm --filter @zo-agent-registry/ui build && pnpm --filter @zo-agent-registry/cli build && pnpm --filter web build",
+    "lint": "pnpm -r run lint",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "test:e2e": "pnpm --filter web test:e2e",
+    "db:generate": "pnpm --filter web exec prisma generate",
+    "db:migrate": "pnpm --filter web exec prisma migrate deploy",
+    "db:migrate:dev": "pnpm --filter web exec prisma migrate dev",
+    "db:seed": "pnpm --filter web exec prisma db seed",
+    "db:studio": "pnpm --filter web exec prisma studio",
+    "cli": "pnpm --filter cli run cli"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}

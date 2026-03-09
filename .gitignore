@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Logs and debug
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing and coverage
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# IDE and OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Temporary and misc
+tmp/
+temp/
+*.tmp
+.zoar/
+
+# Prisma
+*.db
+*.db-journal
+
+# Docker
+.docker/
+
+# Lockfile (optional: uncomment to ignore; usually you want to commit pnpm-lock.yaml)
+# pnpm-lock.yaml
